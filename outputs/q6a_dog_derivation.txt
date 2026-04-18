@@ -1,0 +1,7 @@
+Q6(a) – Derivation of partial derivatives of G(x,y):
+G(x,y) = (1/(2πσ²)) * exp(-(x²+y²)/(2σ²))
+
+∂G/∂x = (1/(2πσ²)) * exp(-(x²+y²)/(2σ²)) * (-2x/(2σ²))
+       = -(x/σ²) * G(x,y)  ✓
+
+∂G/∂y = -(y/σ²) * G(x,y)  (by symmetry) ✓
