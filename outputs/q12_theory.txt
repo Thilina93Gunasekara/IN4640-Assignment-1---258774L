@@ -1,0 +1,34 @@
+Q12 Theoretical Answers
+=======================
+
+(a) Multiplicative Model f(x,y) = i(x,y) · r(x,y):
+    - i(x,y) is illumination: slowly varying, large-area lighting gradients (low-freq)
+    - r(x,y) is reflectance: the actual surface properties, edges, texture (high-freq)
+    - This model is physically motivated: the camera captures light reflected from a surface,
+      so the two components multiply. Separating them allows correcting one without
+      destroying the other.
+
+(b) Log transformation separates the two:
+    log f(x,y) = log i(x,y) + log r(x,y)
+    Multiplication becomes addition in the log domain. We can then use linear filtering
+    to suppress log i (low-freq) and boost log r (high-freq).
+
+(c) Algorithm:
+    1. Log: z(x,y) = log(f(x,y) + 1)
+    2. FFT: Z(u,v) = F{z(x,y)}
+    3. Filter: S(u,v) = H(u,v) · Z(u,v)  with high-emphasis Gaussian H
+    4. IFFT: s(x,y) = F^{-1}{S(u,v)}
+    5. Exp: output = exp(s(x,y)) − 1
+
+(d) Homomorphic vs Histogram Equalization:
+    - Histogram equalization redistributes global intensities but cannot separate
+      illumination and reflectance – it may over-enhance or introduce artifacts.
+    - Homomorphic filtering physically separates lighting from surface detail.
+    - Preferred when: illumination is strongly non-uniform (e.g., face lit from one side,
+      nighttime scenes), or when preserving natural appearance of reflectance is important.
+
+(e) Comments on runway.png result:
+    - Illumination: the runway lighting gradients are reduced, giving a more uniform look.
+    - Contrast: details in dark shadow areas become more visible.
+    - Artifacts: possible slight halo effect near strong edges due to ringing of the
+      Gaussian filter near high-contrast transitions.
