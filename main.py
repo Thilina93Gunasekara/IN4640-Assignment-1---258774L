@@ -1,6 +1,6 @@
 """
 IT5437 / IN4640 — Assignment 1: Intensity Transformations and Neighborhood Filtering
-Student: [Your Index Number]
+Student: 258774L
 
 main.py — Run all questions sequentially.
 Usage:
@@ -46,7 +46,7 @@ def run_q1():
 
 def run_q2():
     separator(2)
-    LABGammaCorrection(f"{IMAGES}/sapphire.jpg", OUTPUTS).run()
+    LABGammaCorrection(f"{IMAGES}/highlights_and_shadows.jpg", OUTPUTS).run()
 
 def run_q3():
     separator(3)
@@ -54,7 +54,7 @@ def run_q3():
 
 def run_q4():
     separator(4)
-    OtsuSelectiveEqualization(f"{IMAGES}/highlights_and_shadows.jpg", OUTPUTS).run()
+    OtsuSelectiveEqualization(f"{IMAGES}/ronak-valobobhai-6YzA45_b2vA-unsplash.jpg", OUTPUTS).run()
 
 def run_q5():
     separator(5)
@@ -90,10 +90,9 @@ def run_q12():
 
 
 if __name__ == "__main__":
-    print("╔══════════════════════════════════════════════════════╗")
-    print("║  IT5437 / IN4640 — Assignment 1                     ║")
-    print("║  Intensity Transformations & Neighborhood Filtering  ║")
-    print("╚══════════════════════════════════════════════════════╝")
+    print("╔═══════════════════════════════════════════════════╗")
+    print("║     IT5437 / IN4640 — Assignment 1 - 258774L      ║")
+    print("╚═══════════════════════════════════════════════════╝")
 
     run_q1()
     run_q2()
