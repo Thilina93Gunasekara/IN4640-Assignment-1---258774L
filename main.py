@@ -18,7 +18,7 @@ sys.path.insert(0, os.path.dirname(__file__))
 from utils.q1_transformations  import IntensityTransformations
 from utils.q2_lab_gamma         import LABGammaCorrection
 from utils.q3_hist_eq           import ManualHistogramEqualization
-from utils.q4_otsu              import OtsuSelectiveEqualization
+from utils.q4_otsu_selective_equalization import OtsuSelectiveEqualization
 from utils.q5_gaussian          import GaussianFiltering
 from utils.q6_dog               import DerivativeOfGaussian
 from utils.q7_zoom              import ImageZooming
