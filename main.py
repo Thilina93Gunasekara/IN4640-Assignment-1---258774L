@@ -74,7 +74,7 @@ def run_q8():
 
 def run_q9():
     separator(9)
-    ImageSharpening(f"{IMAGES}/daisy.jpg", OUTPUTS).run()
+    ImageSharpening(f"{IMAGES}/emma.jpg", OUTPUTS).run()
 
 def run_q10():
     separator(10)
