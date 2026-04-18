@@ -1,0 +1,38 @@
+Q11 Theoretical Answers
+=======================
+
+(a) Convolution Theorem:
+    Spatial domain convolution g(x,y) = f(x,y) * h(x,y) corresponds to pointwise
+    multiplication in the frequency domain: G(u,v) = F(u,v) · H(u,v).
+    This means applying a filter spatially is equivalent to shaping the spectrum
+    of the image by multiplying with the filter's transfer function H(u,v).
+
+(b) Filter frequency domain effects:
+    - Averaging (box) filter: Acts as a low-pass filter. Attenuates high frequencies,
+      passes low frequencies. Since it has a rectangular shape in spatial domain,
+      its Fourier transform is a sinc function – causing ringing artifacts.
+    
+    - Gaussian filter: Also a low-pass filter, but with a smooth Gaussian-shaped
+      frequency response. No abrupt cutoff, so no ringing. Very natural edge-preserving
+      smoothing at low σ values.
+    
+    - Laplacian filter: Acts as a high-pass filter. Amplifies high-frequency components
+      (edges, noise) and suppresses DC/low frequencies. Used for edge detection and
+      image sharpening.
+
+(c) Why Gaussian avoids ringing:
+    The Fourier transform of a Gaussian is also a Gaussian – a smooth, monotonically
+    decreasing function. It has no sidelobes, unlike the sinc response of the box filter.
+    Ringing occurs when a filter has sharp transitions in frequency (like an ideal
+    low-pass filter), which produce oscillating spatial artifacts at edges.
+    Since the Gaussian is infinitely differentiable and has no sharp cutoff, it
+    introduces no such oscillations.
+
+(d) Best filter for high-frequency noise:
+    Gaussian filtering is most suitable:
+    - Spatial: it spreads each pixel's value over neighbors, smoothing out isolated
+      noise spikes (which are spatially uncorrelated).
+    - Frequency: it gently attenuates high-frequency noise while preserving the
+      low-frequency structure of the image.
+    - The box filter also reduces noise but introduces ringing. Laplacian would
+      amplify noise, making it unsuitable.
