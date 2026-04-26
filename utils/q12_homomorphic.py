@@ -91,37 +91,26 @@ class HomomorphicFiltering:
 Q12 Theoretical Answers
 =======================
 
-(a) Multiplicative Model f(x,y) = i(x,y) · r(x,y):
-    - i(x,y) is illumination: slowly varying, large-area lighting gradients (low-freq)
-    - r(x,y) is reflectance: the actual surface properties, edges, texture (high-freq)
-    - This model is physically motivated: the camera captures light reflected from a surface,
-      so the two components multiply. Separating them allows correcting one without
-      destroying the other.
+a)	Multiplicative Model f(x,y) = i(x,y).r(x,y) 
+•	i(x,y) represents illumination, which is defined as area lighting gradient (varies slowly) with low frequency content over large areas. 
+•	r(x,y) is the reflectance value of the surface, containing both surface properties (texture/edges) and other types of detail (i.e., high frequency). 
+•	This is a physically motivated model because the camera only senses what is reflected from the surface, so these two components multiply each other. When we separate the two components, we can modify one of them without affecting the other. 
 
-(b) Log transformation separates the two:
-    log f(x,y) = log i(x,y) + log r(x,y)
-    Multiplication becomes addition in the log domain. We can then use linear filtering
-    to suppress log i (low-freq) and boost log r (high-freq).
+b)	Use of logarithmic transformation to separate the two: log(f(x,y)) = log(i(x,y)) + log(r(x,y)) 
+•	When you take the logarithm off, you convert the multiplication of the two components into addition in the logarithm domain. Thus, if we take a linear filter and low-pass filter the log(i) (i.e., low frequency) and high-pass filter the log(r) (i.e., high frequency), we can manipulate both components independently. 
+c)	Procedure 
+•	Log: z(x,y) = log(f(x,y)+1) 
+•	FFT: Z(u,v) = F{z(x,y)} 
+•	Filter: S(u,v) = H(u,v).Z(u,v) , Where H is a gaussian filter that has a large high emphasis region.
+•	IFFT: s(x,y) = F^{-1}{S(u,v)} 
+•	Exp: Output = exp(s(x,y)) - 1.
+d)	Homomorphic vs Histogram Equalization
+Histogram equalization is a method that will redistribute counts of global intensities across a histogram but will not separate illumination and reflectance - meaning it may create over-enhanced values or artifacts in some cases. On the other hand, homomorphic filtering allows for the physical separation of illumination from surface detail. Homomorphic filtering is preferred for use in instances where the illumination is significantly non-uniform (example: face being lit by only one side, outdoor scenes at night) or when reflecting the natural appearance of reflectance is important.
+e)	Evaluating Results from runway.png
+Illumination - The gradients of the runway lighting have been reduced to provide a more uniform look across the image.
+•	Contrast - Detail in the darker shadow areas have improved visibility.
+•	Artifacts - There may be a slight halo effect created by the ringing of the Gaussian filter near any strong edge due to the transition from high to low contrast.
 
-(c) Algorithm:
-    1. Log: z(x,y) = log(f(x,y) + 1)
-    2. FFT: Z(u,v) = F{z(x,y)}
-    3. Filter: S(u,v) = H(u,v) · Z(u,v)  with high-emphasis Gaussian H
-    4. IFFT: s(x,y) = F^{-1}{S(u,v)}
-    5. Exp: output = exp(s(x,y)) − 1
-
-(d) Homomorphic vs Histogram Equalization:
-    - Histogram equalization redistributes global intensities but cannot separate
-      illumination and reflectance – it may over-enhance or introduce artifacts.
-    - Homomorphic filtering physically separates lighting from surface detail.
-    - Preferred when: illumination is strongly non-uniform (e.g., face lit from one side,
-      nighttime scenes), or when preserving natural appearance of reflectance is important.
-
-(e) Comments on runway.png result:
-    - Illumination: the runway lighting gradients are reduced, giving a more uniform look.
-    - Contrast: details in dark shadow areas become more visible.
-    - Artifacts: possible slight halo effect near strong edges due to ringing of the
-      Gaussian filter near high-contrast transitions.
 """
         with open(os.path.join(self.output_dir, "q12_theory.txt"), "w") as f:
             f.write(theory)

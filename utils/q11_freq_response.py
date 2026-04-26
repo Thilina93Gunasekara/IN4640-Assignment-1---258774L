@@ -76,41 +76,17 @@ class SpatialFrequencyResponse:
 Q11 Theoretical Answers
 =======================
 
-(a) Convolution Theorem:
-    Spatial domain convolution g(x,y) = f(x,y) * h(x,y) corresponds to pointwise
-    multiplication in the frequency domain: G(u,v) = F(u,v) · H(u,v).
-    This means applying a filter spatially is equivalent to shaping the spectrum
-    of the image by multiplying with the filter's transfer function H(u,v).
 
-(b) Filter frequency domain effects:
-    - Averaging (box) filter: Acts as a low-pass filter. Attenuates high frequencies,
-      passes low frequencies. Since it has a rectangular shape in spatial domain,
-      its Fourier transform is a sinc function – causing ringing artifacts.
-    
-    - Gaussian filter: Also a low-pass filter, but with a smooth Gaussian-shaped
-      frequency response. No abrupt cutoff, so no ringing. Very natural edge-preserving
-      smoothing at low σ values.
-    
-    - Laplacian filter: Acts as a high-pass filter. Amplifies high-frequency components
-      (edges, noise) and suppresses DC/low frequencies. Used for edge detection and
-      image sharpening.
+a)	The Convolution Theorem states that applying convolution to a filtered image f(x,y) using a filter h(x,y) in the spatial domain results in applying pointwise multiplication between their corresponding frequency representations, G(u,v) representing the filtered image and H(u,v) representing the filter, in the frequency domain. Therefore, a filter's Fourier transform H(u,v) indicates directly which frequencies are passed or attenuated through that filter and how much.
 
-(c) Why Gaussian avoids ringing:
-    The Fourier transform of a Gaussian is also a Gaussian – a smooth, monotonically
-    decreasing function. It has no sidelobes, unlike the sinc response of the box filter.
-    Ringing occurs when a filter has sharp transitions in frequency (like an ideal
-    low-pass filter), which produce oscillating spatial artifacts at edges.
-    Since the Gaussian is infinitely differentiable and has no sharp cutoff, it
-    introduces no such oscillations.
+b)	Qualitative Frequency Domain Impacts
+Box/averaging Filter: Low Frequency filter with a Sinc Function DFT. The DFT of a Box/Averaging Filter passes low frequency smooth areas of an image and reduces (attenuates) high frequencies (such as edges and noise). Because the Sinc has side lobes, it will produce ringing artifacts.
 
-(d) Best filter for high-frequency noise:
-    Gaussian filtering is most suitable:
-    - Spatial: it spreads each pixel's value over neighbors, smoothing out isolated
-      noise spikes (which are spatially uncorrelated).
-    - Frequency: it gently attenuates high-frequency noise while preserving the
-      low-frequency structure of the image.
-    - The box filter also reduces noise but introduces ringing. Laplacian would
-      amplify noise, making it unsuitable.
+c)	Tuning forks ring because of frequency discontinuities — a phenomenon known as the Gibbs effect. An ideal low-pass filter can be represented by a rectangular cutoff in the frequency domain, while its inverse discrete Fourier transform (IDFT) will exhibit a sinc wave with oscillating tails in the spatial domain. The Gaussian function has a smooth, infinitely differentiable spectrum in the frequency domain, which means that there is no abrupt cutoff to give rise to oscillations in the spatial domain.
+
+d)	Gaussian Filter: Also, low frequency, but a Gaussian DFT is also Gaussian (smooth). The Gaussian filter has no side lobes, so it gradually attenuates high frequencies. Therefore, the Gaussian is an excellent filter for reducing image noise with no ringing artifacts.
+Figure 14 (located at outputs/q11_freq_response.png) depicts 2-dimensional spatial domain filter kernels (top) and their log-magnitude frequency response (bottom). The Gaussian filter shows a smooth and balanced frequency response whereas the Laplacian filter shows amplification of high frequency signals.
+
 """
         with open(os.path.join(self.output_dir, "q11_theory.txt"), "w") as f:
             f.write(theory)
